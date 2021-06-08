@@ -13,7 +13,6 @@ var (
 )
 
 func main() {
-	fmt.Fprintln(os.Stderr, "debug")
 	sourceRoot := os.Args[1]
 	inbytes, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
