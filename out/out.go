@@ -41,6 +41,7 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 
 	if debug {
 		logger.Println(fmt.Sprintf("Params: %+v", params))
+		logger.Println("On debug mode")
 	}
 	if debug {
 		logger.Println("Getting subject")
