@@ -55,7 +55,7 @@ func (s *Sender) Send(msg []byte) error {
 	var err error
 	var wc io.WriteCloser
 	if s.debug {
-		fmt.Fprintln(os.Stderr, "Dialing with TLS")
+		fmt.Fprintln(os.Stderr, "Dialing with TLS...")
 		s.logger.Println("Dialing with TLS")
 	}
 	conn, err := tls.Dial("tcp", fmt.Sprintf("%s:%s",s.host,s.port), s.tlsConfig())
