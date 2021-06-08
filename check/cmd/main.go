@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/pivotal-cf/email-resource/check"
+	"github.com/huangyisan/email-resource/check"
 )
 
 func main() {
