@@ -140,7 +140,9 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 			}
 		}
 	}
-
+	if debug {
+		logger.Println("Gen NewSender")
+	}
 	sender := NewSender(smtpConfig.Host, smtpConfig.Port, smtpConfig.Username, smtpConfig.Password, debug, logger)
 	sender.HostOrigin = smtpConfig.HostOrigin
 	sender.CaCert = smtpConfig.CaCert
@@ -153,6 +155,9 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 	msg, err := mail.Compose()
 	if err != nil {
 		return "", errors.Wrapf(err, "Error composing mail")
+	}
+	if debug {
+		logger.Println("Sending msg")
 	}
 	err = sender.Send(msg)
 	if err != nil {
