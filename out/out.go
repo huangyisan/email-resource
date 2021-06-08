@@ -99,7 +99,7 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 
 	if debug {
 		fmt.Fprintln(os.Stderr, "Building Message Payload xx")
-		logger.Println("Building Message Payload")
+		logger.Println("Building Message Payload xxxxx")
 	}
 
 	mail := NewMailCreator()
