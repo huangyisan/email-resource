@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-
 	"github.com/huangyisan/email-resource/out"
 )
 
