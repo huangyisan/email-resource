@@ -13,6 +13,7 @@ var (
 )
 
 func main() {
+	VERSION = "v1.1.0"
 	sourceRoot := os.Args[1]
 	inbytes, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
