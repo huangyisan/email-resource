@@ -58,17 +58,29 @@ func (s *Sender) Send(msg []byte) error {
 		fmt.Fprintln(os.Stderr, "Dialing with TLS...")
 		s.logger.Println("Dialing with TLaS")
 	}
-	conn, err := tls.Dial("tcp", fmt.Sprintf("%s:%s",s.host,s.port), s.tlsConfig())
-	if err != nil  {
-		return errors.Wrap(err, "unable to start TLS")
-	}
-	c, err = smtp.NewClient(conn, s.host)
+	if s.port == "465" {
+		conn, err := tls.Dial("tcp", fmt.Sprintf("%s:%s",s.host,s.port), s.tlsConfig())
+		if err != nil  {
+			return errors.Wrap(err, "unable to start TLS")
+		}
+		c, err = smtp.NewClient(conn, s.host)
+		defer c.Close()
 
-	//c, err = smtp.Dial(fmt.Sprintf("%s:%s", s.host, s.port))
-	//if err != nil {
-	//	return errors.Wrap(err, "Error Dialing smtp server")
-	//}
-	//defer c.Close()
+	} else {
+		c, err = smtp.Dial(fmt.Sprintf("%s:%s", s.host, s.port))
+		if err != nil {
+			return errors.Wrap(err, "Error Dialing smtp server")
+		}
+		defer c.Close()
+
+		if ok, _ := c.Extension("STARTTLS"); ok {
+			config := s.tlsConfig()
+
+			if err = c.StartTLS(config); err != nil {
+				return errors.Wrap(err, "unable to start TLS")
+			}
+		}
+	}
 
 	hostOrigin := "localhost"
 
@@ -84,14 +96,6 @@ func (s *Sender) Send(msg []byte) error {
 	if s.debug {
 		s.logger.Println("STARTTLS with SMTP Server")
 	}
-
-	//if ok, _ := c.Extension("STARTTLS"); ok {
-	//	config := s.tlsConfig()
-	//
-	//	if err = c.StartTLS(config); err != nil {
-	//		return errors.Wrap(err, "unable to start TLS")
-	//	}
-	//}
 
 	if s.debug {
 		s.logger.Println("Authenticating with SMTP Server")

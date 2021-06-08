@@ -3,3 +3,5 @@ bin
 vars.yml
 vendor
 integration
+go.mod
+go.sum
