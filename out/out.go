@@ -44,6 +44,7 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 		logger.Println("On debug mode")
 	}
 	if debug {
+		fmt.Fprintln(os.Stderr, "Setting subject xx")
 		logger.Println("Getting subject")
 	}
 	subject, err := fromTextOrFile(sourceRoot, params.SubjectText, params.Subject)
@@ -53,6 +54,7 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 	subject = strings.Trim(subject, "\n")
 
 	if debug {
+		fmt.Fprintln(os.Stderr, "Getting Body xx")
 		logger.Println("Getting Body")
 	}
 	body, err := fromTextOrFile(sourceRoot, params.BodyText, params.Body)
@@ -96,6 +98,7 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 	}
 
 	if debug {
+		fmt.Fprintln(os.Stderr, "Building Message Payload xx")
 		logger.Println("Building Message Payload")
 	}
 
@@ -157,6 +160,7 @@ func Execute(sourceRoot, version string, input []byte) (string, error) {
 		return "", errors.Wrapf(err, "Error composing mail")
 	}
 	if debug {
+		fmt.Fprintln(os.Stderr, "Sending msg xx")
 		logger.Println("Sending msg")
 	}
 	err = sender.Send(msg)
